@@ -103,3 +103,99 @@ public:
     }
 };
 ```
+***
+##5.Longest Palindromic Substring
+**题意**:求字符串的最长回问子串.
+**分析**:
+- 首先很容易想到暴力的方法,把回文子串分成奇数长度和偶数长度两种情况,把每个字符当做回文串的中心,然后求以它为奇数串中心(或者偶数串的左中心),求它为中心的最长回文串的长度.这样复杂度是$O(n ^2)$,LeetCode也能AC....
+
+**暴力的代码:**
+```
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        int retodd = 0, reteven = 0, odd = 0, even = 0;
+        for (int i = 0; i < s.size(); i++) {
+            for (int l = i, r = i; l >= 0 && r < s.size(); l--, r++) {
+                if (s[l] != s[r]) break;
+                if (r - l + 1 > retodd) {
+                    retodd = r - l + 1;
+                    odd = i;
+                } 
+            }
+            
+            for (int l = i, r = i + 1; l >= 0 && r < s.size(); l--, r++) {
+                if (s[l] != s[r]) break;
+            
+                if (r - l + 1 > reteven) {
+                    reteven = r - l + 1;
+                    even = i;
+                } 
+            }
+        }
+        if (retodd > reteven) {
+            return s.substr(odd - retodd / 2, retodd);
+        } else {
+            return s.substr(even - reteven / 2 + 1, reteven);
+        }
+    }
+};
+```
+**Manacher算法**:强悍的马拉车算法,时间复杂度$O(n)$...
+```cpp
+class Solution {
+public:
+    string preProcess(string s)
+    {
+        int n = s.length();
+        if (n == 0) return "^$";
+        string ret = "^";
+        for (int i = 0; i < n; i++)
+            ret += "#" + s.substr(i, 1);
+    
+        ret += "#$";
+        return ret;
+    }
+    
+    string longestpalindrome(string s)
+    {
+        string T = preProcess(s);
+        int n = T.length();
+        int* P = new int[n];
+        int C = 0, R = 0;
+        for (int i = 1; i < n - 1; i++) {
+            int i_mirror = 2 * C - i; // 等于i' = C - (i-C)
+    
+        P[i] = (R > i) ? min(R-i, P[i_mirror]) : 0;
+    
+        // 尝试扩展中心为i的回文
+        while (T[i + 1 + P[i]] == T[i - 1 - P[i]])
+            P[i]++;
+    
+        // 如果中心为i的回文超越了R，根据已扩展的回文来调整中心
+        if (i + P[i] > R) {
+            C = i;
+            R = i + P[i];
+            }
+        }
+    
+        // 找出P中的最大值
+        int maxLen = 0;
+        int centerIndex = 0;
+        for (int i = 1; i < n-1; i++) {
+            if (P[i] > maxLen) {
+                maxLen = P[i];
+                centerIndex = i;
+            }
+        }
+        delete[] P;
+    
+        return s.substr((centerIndex - 1 - maxLen)/2, maxLen);
+    }
+    string longestPalindrome(string s) {
+        return longestpalindrome(s);
+    }
+};
+```
+
+
