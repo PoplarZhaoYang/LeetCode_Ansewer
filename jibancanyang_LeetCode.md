@@ -104,6 +104,44 @@ public:
 };
 ```
 ***
+##4.Median of Two Sorted Arrays(递归截断)
+**题意**:给两个已经排序的数组,求它们合并后的中位数,要求复杂度是$O(log(n + m))$.
+**分析**:
+- 首先很容易想到利用归并排序合并两个数组的方法来合并这两个有序数组,时间复杂度是$O(n)$
+- 然后继续想可以以第一个数组为基准,来进行二分.一旦第一个数组中的元素选定,由于中位数就是中间的数字,那么第二个数组中数的对应位置也就确定了.二分第一个数组的位置,然后判断第一个第二个数组的选择部分是否满足条件.这样实现了一晚上,失败..细节太多.
+- 然后就是log(n + m) 的正确解答.利用了一个重要的性质.**如果我们要在两个有序数组中选择第$k$个数,那么取第一个数组的第$k / 2$个数,和第二个数组的第$k - k / 2$个数,如果第一个数组的$k / a$个数小于第二个数组的$k - k/ a$个数,那么第一个数组的前$k / 2$个数中一定没有目标中位数,直接截断,第二个数组小的话也同理**这样就是形成了一个每次让其中一个数组长度截断一半的递归...
+
+> 注意的是一定要保证思路完全清晰了再开始写代码,然后尽量通读代码查错而不是靠单步调试...
+> 思考过程就是列出所有可能具有的性质,然后来尽量让这些性质交织着向正确答案靠近.
+
+**code**:
+```
+
+class Solution {
+public:
+    double doit(int a, int b, int t, vector<int> &v1, vector<int> &v2) {
+        int ka = min((int)v1.size() - a, t / 2), kb = t - ka;
+        //The first is always shorter.
+        if (v1.size() - a > v2.size() - b) return doit(b, a, t, v2, v1);
+        if (v1.size() == a) return v2[b + t - 1];
+        
+        //When only choose one number.
+        if (t == 1) return double(min(v1[a], v2[b]));
+        
+        if (v1[a + ka - 1] == v2[b + kb - 1]) return double(v1[a + ka - 1]);
+        else if (v1[a + ka - 1] < v2[b + kb - 1]) return doit(a + ka, b, t - ka, v1, v2);
+        else return doit(a, b + kb, t - kb, v1, v2);
+    }
+    
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        if ((nums1.size() + nums2.size()) % 2) return doit(0, 0, (int)(nums1.size() + nums2.size() + 1) / 2, nums1, nums2);
+        else return (doit(0, 0, (int)(nums1.size() + nums2.size() + 1) / 2, nums1, nums2) +
+            doit(0, 0, (int)(nums1.size() + nums2.size() + 2) / 2, nums1, nums2)) / 2;
+    }
+};
+```
+
+***
 ##5.Longest Palindromic Substring
 **题意**:求字符串的最长回问子串.
 **分析**:
