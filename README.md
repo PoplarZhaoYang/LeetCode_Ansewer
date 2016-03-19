@@ -269,3 +269,42 @@ public:
 };
 ```
 
+***
+##98. Validate Binary Search Tree(dfs)
+**题意**:判断一个二叉树是不是二叉搜索树.
+**分析**:中序遍历二叉搜索树,将得到升序数组,dfs遍历即可.
+
+```cpp
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+private:
+    bool ans;
+    long long last;
+public:
+    void dfs(TreeNode *cur) {
+        if (!ans) return;
+        if (cur -> left != NULL) dfs(cur -> left);
+        if (cur -> val <= last) ans = false;
+        last = cur -> val;
+        if (cur -> right != NULL) dfs(cur -> right);
+        return;
+    }
+
+    bool isValidBST(TreeNode* root) {
+        ans = true, last = -10000000000000;
+        if (root == NULL) return ans;
+        dfs(root);
+        return ans;
+    }
+};
+
+```
+
