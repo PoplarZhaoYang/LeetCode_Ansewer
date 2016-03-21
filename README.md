@@ -268,6 +268,35 @@ public:
     }
 };
 ```
+***
+##7.Reverse Integer(模拟)
+**题意**:翻转一个int型数,注意坑点是数据范围超过会出现问题.总是很草率的提交,写完了得检查一下逻辑,争取一次AC率高一些啊...
+> **一些语言特性**:
+> `#include <climits>`库里面有一些表示数据范围的常量:
+> `INT_MAX` `INT_MIN` `LONG_MAX` `CHAR_MAX` ....诸如此类.
+
+**本题代码**:
+```
+#include <climits>
+class Solution {
+public:
+    long long reverse(int x) {
+        string str = to_string(x);
+        for (int i = (str[0] == '-' ? 1 : 0), j = (int)str.size() - 1; i < j; i++, j--) {
+            swap(str[i], str[j]);
+        }
+        long long temp = 0;
+//        cout << str << endl;
+        for (int i = (str[0] == '-' ? 1 : 0); i < str.size(); i++) {
+//            cout << temp << endl;
+            temp = temp * 10 + str[i] - '0';
+        }
+        if (temp > INT_MAX) return 0;
+        return str[0] == '-' ? -temp : temp;
+    }
+};
+```
+
 
 ***
 ##98. Validate Binary Search Tree(dfs)
