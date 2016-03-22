@@ -296,6 +296,26 @@ public:
     }
 };
 ```
+##9.Palindrome Number(模拟)
+**题意**:要求不用额外空间判断是否是回文数.
+这里我用了一个int变量,根据(/10, %10)组合操作来取它所有的数.
+```cpp
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        if (x < 0 || (x != 0 && x % 10 == 0)) return false;
+        int y = 0;
+        while (y < x) {
+            y = y * 10 + x % 10;
+            x /= 10;
+        }
+        return x == y || x == y / 10;
+    }
+};
+
+
+```
+
 
 
 ***
