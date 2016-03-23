@@ -356,4 +356,70 @@ public:
 };
 
 ```
+***
+##211.Add and Search Word - Data structure design(trie树)
+**题意**:创建一个单词库,支持两种操作,给库里面加入新单词和查询某单词是否在库中,但是注意用'.'来做通配符,可以代替任意字符.
+**分析**:trie树的改造.主要是通配符的处理.这里把搜索函数处理了一下,用递归实现,当配件通配符号的时候遍历它的所有26个分枝来求满足条件的.
+
+**code**:
+```cpp
+
+class WordDictionary {
+private:
+    struct node {
+        int have;
+        node *next[26];
+        
+        node(void) {
+            have = 0;
+            for (int i = 0; i < 26; i++) next[i] = NULL;
+        }
+    };
+    
+public:
+    
+    node *root = new node;
+
+    // Adds a word into the data structure.
+    // The time consumer is O(n)
+    void addWord(string word) {
+        node *p = root;
+        for (int i = 0; i < word.size(); i++) {
+            int aim = word[i] - 'a';
+            if ((p -> next)[aim] == NULL) (p -> next)[aim] = new node;
+            p = (p -> next)[aim];
+        }
+        (p -> have) = (p -> have) + 1;
+    }
+    
+    bool can(node *p, int head, const string &word) {
+        if (head == word.size() && p -> have) return true;
+        int aim = word[head] == '.' ? 26 : word[head] - 'a';
+        if (aim == 26) {
+            for (int i = 0; i < 26; i++)
+                if ((p -> next)[i] != NULL && can( (p -> next)[i], head + 1, word)) return true;
+            return false;
+        }
+        if ((p -> next)[aim] != NULL)
+            return can((p -> next)[aim], head + 1, word);
+        return false;
+    }
+    
+    // Returns if the word is in the data structure. A word could
+    // contain the dot character '.' to represent any one letter.
+    bool search(string word) {
+        node *p = root;
+        int head = 0;
+        return can(p, head, word);
+    }
+};
+
+// Your WordDictionary object will be instantiated and called as such:
+// WordDictionary wordDictionary;
+// wordDictionary.addWord("word");
+// wordDictionary.search("pattern");
+
+
+
+```
 
