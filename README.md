@@ -356,6 +356,72 @@ public:
 };
 
 ```
+##208. Implement Trie (Prefix Tree)(trie树)
+**题意**:支持插入查询,和前缀查询的trie树实现.
+**分析**:设置一个前缀标记就好了.
+这里应该记住一个经典操作,trie树中的迭代.
+> ```
+>  if ((p -> next)[word[i] - 'a'] == NULL) (p -> next)[word[i] - 'a'] = new TrieNode;
+> p = (p -> next)[word[i] - 'a'];
+> ```
+
+**code**:
+```
+
+class TrieNode {
+public:
+    // Initialize your data structure here.
+    TrieNode() : isword(false), ispreix(false) {
+        for (int i = 0; i < 26; i++) next[i] = NULL;
+    }
+    bool isword, ispreix;
+    TrieNode *next[26];
+};
+
+class Trie {
+public:
+    Trie() {
+        root = new TrieNode();
+    }
+
+    // Inserts a word into the trie.
+    void insert(string word) {
+        TrieNode *p = root;
+        for (int i = 0; i < word.size(); i++) {
+            if ((p -> next)[word[i] - 'a'] == NULL) (p -> next)[word[i] - 'a'] = new TrieNode;
+            p = (p -> next)[word[i] - 'a'];
+            (p -> ispreix) = true;
+        }
+        (p -> isword) = true;
+    }
+
+    // Returns if the word is in the trie.
+    bool search(string word) {
+        TrieNode *p = root;
+        for (int i = 0; i < word.size(); i++) {
+            if ((p -> next)[word[i] - 'a'] == NULL) return false;
+            p = (p -> next)[word[i] - 'a'];
+            if (i == word.size() - 1) return (p -> isword);
+        }
+    }
+
+    // Returns if there is any word in the trie
+    // that starts with the given prefix.
+    bool startsWith(string word) {
+        TrieNode *p = root;
+        for (int i = 0; i < word.size(); i++) {
+            if ((p -> next)[word[i] - 'a'] == NULL) return false;
+            p = (p -> next)[word[i] - 'a'];
+            if (i == word.size() - 1) return (p -> ispreix);
+        }
+    }
+
+private:
+    TrieNode* root;
+};
+
+
+```
 ***
 ##211.Add and Search Word - Data structure design(trie树)
 **题意**:创建一个单词库,支持两种操作,给库里面加入新单词和查询某单词是否在库中,但是注意用'.'来做通配符,可以代替任意字符.
