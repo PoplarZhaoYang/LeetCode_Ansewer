@@ -296,6 +296,24 @@ public:
     }
 };
 ```
+
+***
+
+##8. String to Integer (atoi)(C++)
+可以说是一道恶心的模拟题,但是恰好C++库里有可以直接拿来用的stringtoint的标准函数.
+```
+class Solution {
+public:
+    int myAtoi(string str) {
+        if (str == "") return 0;
+        istringstream ret(str); //定义一个输入字符串流
+        int i;
+        ret >> i; //把一个输入流中的内容输出为整型
+        return i;
+    }
+};
+```
+***
 ##9.Palindrome Number(模拟)
 **题意**:要求不用额外空间判断是否是回文数.
 这里我用了一个int变量,根据(/10, %10)组合操作来取它所有的数.
