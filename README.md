@@ -335,7 +335,22 @@ public:
 ```
 
 
-
+***
+##70.  Climbing Stairs(水dp)
+非常水的动态规划,定义$dp[i]$为爬到$i$梯需要的步数,归纳为它的两个子问题即可.
+```
+class Solution {
+public:
+    int climbStairs(int n) {
+        int dp[1000000];
+        dp[0] = dp[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+        return dp[n];
+    }
+};
+```
 ***
 ##98. Validate Binary Search Tree(dfs)
 **题意**:判断一个二叉树是不是二叉搜索树.
