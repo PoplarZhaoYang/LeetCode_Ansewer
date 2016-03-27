@@ -354,7 +354,27 @@ public:
     }
 };
 ```
-
+***
+##63. Unique Paths II(dp)
+类似上题而已...
+```
+class Solution {
+public:
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+        int dp[111][111], m = obstacleGrid.size(), n = obstacleGrid[0].size();
+        memset(dp, 0, sizeof(dp));
+        dp[m][n] = 1;
+        
+        for (int i = m ; i > 0; i--) {
+            for (int j = n; j > 0; j--) {
+                if (j + 1 <= n && !obstacleGrid[i - 1][j - 1] ) dp[i][j] += dp[i][j + 1];
+                if (i + 1 <= m && !obstacleGrid[i - 1][j - 1]) dp[i][j] += dp[i + 1][j];
+            }
+        }
+        return obstacleGrid[m - 1][n - 1] == 1 ? 0 : dp[1][1];
+    }
+};
+```
 ***
 ##70.  Climbing Stairs(水dp)
 非常水的动态规划,定义$dp[i]$为爬到$i$梯需要的步数,归纳为它的两个子问题即可.
