@@ -333,7 +333,27 @@ public:
 
 
 ```
-
+##62. Unique Paths(dp)
+**题意**:从格子的左上角走到右下角有多少种走法,只能往右或者往下走.
+**分析**:直接dp即可.这里主要注意当dp写成递推的时候,更新顺序的选择时候道路方向相关的.
+```
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        int dp[111][111];
+        memset(dp, 0, sizeof(dp));
+        dp[m][n] = 1;
+        
+        for (int i = m ; i > 0; i--) {
+            for (int j = n; j > 0; j--) {
+                if (j + 1 <= n) dp[i][j] += dp[i][j + 1];
+                if (i + 1 <= m) dp[i][j] += dp[i + 1][j];
+            }
+        }
+        return dp[1][1];
+    }
+};
+```
 
 ***
 ##70.  Climbing Stairs(水dp)
