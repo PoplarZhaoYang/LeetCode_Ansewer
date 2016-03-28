@@ -429,6 +429,27 @@ public:
 };
 
 ```
+##120. Triangle(dp)
+**题意**:经典DP问题,有点像个二叉树的树形dp.
+```
+class Solution {
+public:
+    int minimumTotal(vector<vector<int>>& v) {
+        int dp[222][222];
+        
+        for (int i = v[v.size() - 1].size() - 1; i >= 0; i--) {
+            dp[v.size() - 1][i] = v[v.size() - 1][i];
+        }
+        for (int i = v.size() - 2; i >= 0; i--) {
+            for (int j = v[i].size() - 1; j >= 0; j--) {
+                dp[i][j] = v[i][j] + min(dp[i + 1][j], dp[i + 1][j + 1]);
+            }
+        }
+        return dp[0][0];
+    }
+};
+```
+***
 ##208. Implement Trie (Prefix Tree)(trie树)
 **题意**:支持插入查询,和前缀查询的trie树实现.
 **分析**:设置一个前缀标记就好了.
