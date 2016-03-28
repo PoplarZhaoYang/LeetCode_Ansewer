@@ -582,4 +582,34 @@ public:
 
 
 ```
+***
+##264. Ugly Number II(dp,O(n)求丑数)
+**题意**:求第n个丑数.
+**分析**:很容易有set的做法,复杂度$nlogn$.但是这里可以用$O(n)$的做法.
+- 我们定义$dp[i]$为第$i$个丑数,那么$dp[i]$一定是前面的某个丑数乘以2或者乘以3或者乘以5得到的最小值.
+- 我们定义指针:p2,$dp[p2]$表示还没有乘以2来派生下一个数的最小丑数,同理有$dp[p3],dp[p5]$.这样我们就维护了伤着派生情况的最小值,每次都只需要从三个派生口找一个最小的来更新.
+- 派送口的更新规则是一旦该口派生了,指针就指向下一个丑数,成为新的没有派生的最小丑数.
+
+**总结**:这个思路还是极其巧妙的,有三条派生流,每次更新流的端口.
+```
+typedef long long ll;
+
+class Solution {
+public:
+
+    ll nthUglyNumber(int n) {
+        //priority_queue<int, vector<int>, greater<int> > que;
+        set<ll> que;
+        que.insert(1);
+        for (int i = 1; i < n; i++) {
+            ll top = *que.begin(); que.erase(top);
+            if (!que.count(top * 2)) que.insert(top * 2);
+            if (!que.count(top * 3)) que.insert(top * 3);
+            if (!que.count(top * 5)) que.insert(top * 5);
+        }
+        return *que.begin();
+    }
+};
+```
+
 
