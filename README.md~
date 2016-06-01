@@ -1,4 +1,8 @@
+![equation](http://www.sciweavers.org/tex2img.php?eq=1%2Bsin%28mc%5E2%29&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=)
+
+
 ## The_way_of_accomplishing_LeetCode.
+
 The way is not so far.It has 337 problems until 2016-03-15.
 Go on!my friends.
 
@@ -375,6 +379,33 @@ public:
     }
 };
 ```
+
+***
+##64. Minimum Path Sum（经典动态规划）
+**题意**：求矩阵左上角到右下角的路径的数字和最小。
+**分析**:
+定义：$dp[i][j]$表示从$(i,j)$点到右下角的最短距离。
+除了最后一行没后下面的数，最后一列没有右边的数特殊初始化，其它的全部都是:
+$$dp[i][j] = grid[i][j] + min(dp[i + 1][j], dp[i][j + 1])$$
+这里发现grid只用了一次，直接连dp数组都不要，用grid来dp就好了。
+```
+class Solution {
+public:
+    int minPathSum(vector<vector<int>>& grid) {
+        if (grid.empty()) return 0;
+        int n = grid.size(), m = grid[0].size();
+        for (int i = m - 2; i >= 0; i--) grid[n - 1][i] = grid[n - 1][i] + grid[n - 1][i + 1];
+        for (int i = n - 2; i >= 0; i--) grid[i][m - 1] = grid[i][m - 1] + grid[i + 1][m - 1];
+        for (int i = n - 2; i >= 0; i--) {
+            for (int j = m - 2; j >= 0; j--) {
+                grid[i][j] = grid[i][j] + min(grid[i + 1][j], grid[i][j + 1]);
+            }
+        }
+        return grid[0][0];
+    }
+};
+```
+
 ***
 ##70.  Climbing Stairs(水dp)
 非常水的动态规划,定义$dp[i]$为爬到$i$梯需要的步数,归纳为它的两个子问题即可.
