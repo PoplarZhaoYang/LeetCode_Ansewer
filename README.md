@@ -6,7 +6,6 @@ The way is not so far.It has 337 problems until 2016-03-15.
 Go on!my friends.
 
 #LeetCode 通关之路
-@(E ACMer)
 
 [toc]
 
@@ -548,6 +547,32 @@ public:
             }
         }
         return dp[0][0];
+    }
+};
+```
+
+***
+##179. Largest Number(排序 + 贪心)
+**题意**:给你多个数字要求拼接成最大的数字。
+**分析**：
+简单的想法就是按字典序由大到小排序，然后拼接起来，但是这样不对，比如：30和3，330比303更优秀。这里有个巧妙的比较方法就是对于谁在前谁在后拼接起来试一下就可以。整个比较链是传递的，所以这种方法排序就可。
+注意其中的特殊情况就是多个0，需要排除，这里自己没有排除Wa了一发，多考虑漏洞啊。
+
+```
+class Solution {
+public:
+    static bool cmp(string &a, string &b) {
+        return a + b > b + a;
+    }
+
+    string largestNumber(vector<int>& nums) {
+        vector<string> temp;
+        for (auto &c: nums) temp.push_back(to_string(c));
+        sort(temp.begin(), temp.end(), cmp);
+        string ret;
+        for (auto &c: temp) ret += c;
+        if (!ret.empty() && ret[0] == '0') return "0";
+        return ret;
     }
 };
 ```
