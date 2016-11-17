@@ -335,6 +335,37 @@ public:
 
 
 ```
+
+***
+##10. Regular Expression Matching （动态规划)
+$dp[i][j]$表示匹配到s的i和p的j处。主要是考虑p为'*'的时候其前面的字符可以表示从0到任意次时如何处理。
+
+```
+class Solution {
+public:
+    bool dp[1234][1234];
+    
+    bool isMatch(string s, string p) {
+        memset(dp, false, sizeof(dp));
+        dp[0][0] = true;
+        s = '^' + s, p = '$' + p;
+        for (int i = 1; i <= p.size(); ++i) {
+            if (p[i] == '*' && dp[0][i - 2]) dp[0][i] = true;
+        }
+        for (int i = 1; i <= s.size(); ++i) {
+            for (int j = 1; j <= p.size(); ++j) {
+                if ( (s[i] == p[j] || p[j] == '.') && dp[i - 1][j - 1]) dp[i][j] = true;
+                if (p[j] == '*') {
+                    if (dp[i][j - 2] || dp[i][j - 1] || ( (s[i] == p[j - 1] || p[j - 1] == '.') && (dp[i - 1][j - 1]
+                    || dp[i - 1][j]) ) ) dp[i][j] = true;
+                }
+            }
+        }
+        return dp[s.size()][p.size()];
+    }
+};
+```
+
 ***
 ##11. Container With Most Water(双指针)
 经过思考之后，我发现这个题有复杂度为$O(n)$的优秀方法。

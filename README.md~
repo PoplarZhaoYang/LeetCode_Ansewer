@@ -6,7 +6,6 @@ The way is not so far.It has 337 problems until 2016-03-15.
 Go on!my friends.
 
 #LeetCode 通关之路
-@(E ACMer)
 
 [toc]
 
@@ -336,6 +335,37 @@ public:
 
 
 ```
+
+***
+##10. Regular Expression Matching （动态规划)
+$dp[i][j]$表示匹配到s的i和p的j处。主要是考虑p为'*'的时候其前面的字符可以表示从0到任意次时如何处理。
+
+```
+class Solution {
+public:
+    bool dp[1234][1234];
+    
+    bool isMatch(string s, string p) {
+        memset(dp, false, sizeof(dp));
+        dp[0][0] = true;
+        s = '^' + s, p = '$' + p;
+        for (int i = 1; i <= p.size(); ++i) {
+            if (p[i] == '*' && dp[0][i - 2]) dp[0][i] = true;
+        }
+        for (int i = 1; i <= s.size(); ++i) {
+            for (int j = 1; j <= p.size(); ++j) {
+                if ( (s[i] == p[j] || p[j] == '.') && dp[i - 1][j - 1]) dp[i][j] = true;
+                if (p[j] == '*') {
+                    if (dp[i][j - 2] || dp[i][j - 1] || ( (s[i] == p[j - 1] || p[j - 1] == '.') && (dp[i - 1][j - 1]
+                    || dp[i - 1][j]) ) ) dp[i][j] = true;
+                }
+            }
+        }
+        return dp[s.size()][p.size()];
+    }
+};
+```
+
 ***
 ##11. Container With Most Water(双指针)
 经过思考之后，我发现这个题有复杂度为$O(n)$的优秀方法。
@@ -548,6 +578,32 @@ public:
             }
         }
         return dp[0][0];
+    }
+};
+```
+
+***
+##179. Largest Number(排序 + 贪心)
+**题意**:给你多个数字要求拼接成最大的数字。
+**分析**：
+简单的想法就是按字典序由大到小排序，然后拼接起来，但是这样不对，比如：30和3，330比303更优秀。这里有个巧妙的比较方法就是对于谁在前谁在后拼接起来试一下就可以。整个比较链是传递的，所以这种方法排序就可。
+注意其中的特殊情况就是多个0，需要排除，这里自己没有排除Wa了一发，多考虑漏洞啊。
+
+```
+class Solution {
+public:
+    static bool cmp(string &a, string &b) {
+        return a + b > b + a;
+    }
+
+    string largestNumber(vector<int>& nums) {
+        vector<string> temp;
+        for (auto &c: nums) temp.push_back(to_string(c));
+        sort(temp.begin(), temp.end(), cmp);
+        string ret;
+        for (auto &c: temp) ret += c;
+        if (!ret.empty() && ret[0] == '0') return "0";
+        return ret;
     }
 };
 ```
