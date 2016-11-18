@@ -413,6 +413,34 @@ public:
     }
 };
 ```
+
+***
+## 14. Longest Common Prefix (模拟)
+有两种扩展方法都很简单，最坏复杂度都是$O(ln)$
+
+```
+class Solution(object):
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        if len(strs) == 0: 
+            return ""
+        ret = ""
+        first = strs[0]
+        flag = False
+        for i in range(0, len(strs[0])):
+            for str in strs:
+                if len(str) == i or str[i] != first[i]:
+                    flag = True
+            if flag:
+                break
+            ret += first[i]
+            
+        return ret
+```
+
 ***
 ##62. Unique Paths(dp)
 **题意**:从格子的左上角走到右下角有多少种走法,只能往右或者往下走.
