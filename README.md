@@ -637,7 +637,7 @@ public:
 ```
 *** 
 ## 205. Isomorphic Strings   Add to List QuestionEditorial Solution  My Submissions
-
+一个源点只能有一个像的双射。
 ```
 class Solution(object):
     def isIsomorphic(self, s, t):
