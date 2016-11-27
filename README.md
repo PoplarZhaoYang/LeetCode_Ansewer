@@ -635,6 +635,33 @@ public:
     }
 };
 ```
+*** 
+## 205. Isomorphic Strings   Add to List QuestionEditorial Solution  My Submissions
+
+```
+class Solution(object):
+    def isIsomorphic(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+        if len(s) != len(t):
+            return False
+        a = [-1] * 256
+        b = [-1] * 256
+        for i in range(len(s)):
+            x = ord(s[i])
+            y = ord(t[i])
+            if a[x] == -1 and b[y] == -1:
+                a[x] = y
+                b[y] = x
+            elif a[x] != y:
+                return False
+        return True
+```
+
+
 ***
 ##208. Implement Trie (Prefix Tree)(trie树)
 **题意**:支持插入查询,和前缀查询的trie树实现.
