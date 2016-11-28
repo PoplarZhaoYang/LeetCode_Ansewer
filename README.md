@@ -1,15 +1,20 @@
 
-
-## Leetcode.
+Leetcode Answer.
+========
 
 The way is not so far.It has 337 problems until 2016-03-15.
 Go on!my friends.
 
 #LeetCode 通关之路
 
-[toc]
+## 目录
+    * [Problem 1 to 10](#P1)
 
-by jibancanyang
+
+
+P1
+=========
+
 ***
 ##1.Two Sum(水)
 **分析**:数学里的$\binom{2}{n}$.

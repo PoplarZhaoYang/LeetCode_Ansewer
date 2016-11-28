@@ -1,6 +1,6 @@
 
-
-## Leetcode.
+Leetcode Answer.
+========
 
 The way is not so far.It has 337 problems until 2016-03-15.
 Go on!my friends.
@@ -413,6 +413,34 @@ public:
     }
 };
 ```
+
+***
+## 14. Longest Common Prefix (模拟)
+有两种扩展方法都很简单，最坏复杂度都是$O(ln)$
+
+```
+class Solution(object):
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        if len(strs) == 0: 
+            return ""
+        ret = ""
+        first = strs[0]
+        flag = False
+        for i in range(0, len(strs[0])):
+            for str in strs:
+                if len(str) == i or str[i] != first[i]:
+                    flag = True
+            if flag:
+                break
+            ret += first[i]
+            
+        return ret
+```
+
 ***
 ##62. Unique Paths(dp)
 **题意**:从格子的左上角走到右下角有多少种走法,只能往右或者往下走.
@@ -607,6 +635,33 @@ public:
     }
 };
 ```
+*** 
+## 205. Isomorphic Strings   Add to List QuestionEditorial Solution  My Submissions
+
+```
+class Solution(object):
+    def isIsomorphic(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+        if len(s) != len(t):
+            return False
+        a = [-1] * 256
+        b = [-1] * 256
+        for i in range(len(s)):
+            x = ord(s[i])
+            y = ord(t[i])
+            if a[x] == -1 and b[y] == -1:
+                a[x] = y
+                b[y] = x
+            elif a[x] != y:
+                return False
+        return True
+```
+
+
 ***
 ##208. Implement Trie (Prefix Tree)(trie树)
 **题意**:支持插入查询,和前缀查询的trie树实现.
