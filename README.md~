@@ -1,8 +1,6 @@
-[TOC]
 
 Leetcode Answer.
 ========
-[TOC]
 The way is not so far.It has 337 problems until 2016-03-15.
 Go on!my friends.
 
@@ -13,8 +11,7 @@ Go on!my friends.
 * [Problem 11 to 20](#P2)
 
 
-
-#P1
+<span id="P1">Problem 1 to 10</span>
 
 ***
 ##1.Two Sum(水)
@@ -372,7 +369,7 @@ public:
 };
 ```
 
-#P2
+<span id="P2">Problem 11 to 20</span>
 ======
 
 ***
