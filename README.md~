@@ -7,9 +7,14 @@ Go on!my friends.
 
 #LeetCode 通关之路
 
-[toc]
+## 目录
+* [Problem 1 to 10](#P1)
 
-by jibancanyang
+
+
+P1
+=========
+
 ***
 ##1.Two Sum(水)
 **分析**:数学里的$\binom{2}{n}$.
@@ -637,7 +642,7 @@ public:
 ```
 *** 
 ## 205. Isomorphic Strings   Add to List QuestionEditorial Solution  My Submissions
-
+一个源点只能有一个像的双射。
 ```
 class Solution(object):
     def isIsomorphic(self, s, t):
