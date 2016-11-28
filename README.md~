@@ -11,7 +11,8 @@ Go on!my friends.
 * [Problem 11 to 20](#P2)
 
 
-<span id="P1">Problem 1 to 10</span>
+<h1 id="P1">P1</h1>
+
 
 ***
 ##1.Two Sum(水)
@@ -369,7 +370,7 @@ public:
 };
 ```
 
-<span id="P2">Problem 11 to 20</span>
+<h1 id="P2">P2</h1>
 ======
 
 ***
