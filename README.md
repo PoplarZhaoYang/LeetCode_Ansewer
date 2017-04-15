@@ -449,6 +449,33 @@ class Solution(object):
 ```
 
 ***
+## 15. 3Sum
+固定头部，双指针尾巴和中部，ksum问题都是枚举前面的维度，最后维度用双指针
+```
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int> > ans;
+        if (nums.size() < 3) return ans;
+        sort(nums.begin(), nums.end());
+        for (int head = 0; head < nums.size() - 2; ++head) {
+            if (head > 0 && nums[head] == nums[head - 1]) continue;
+            int p = head + 1;
+            for (int tail = nums.size() - 1; tail > head + 1 && p < tail; --tail) {
+                if (tail < nums.size() - 1 && nums[tail] == nums[tail + 1]) continue;
+                while (p < tail && nums[head] + nums[p] + nums[tail] < 0) ++p;
+                if (p < tail && nums[head] + nums[p] + nums[tail] == 0 && !(p > head + 1 && nums[p] == nums[p - 1])) {
+                    vector<int> t = vector<int>({nums[head], nums[p], nums[tail]});
+                    ans.push_back(t);
+                }
+            }
+        }
+        return ans;
+    }
+};
+```
+
+***
 ##62. Unique Paths(dp)
 **题意**:从格子的左上角走到右下角有多少种走法,只能往右或者往下走.
 **分析**:直接dp即可.这里主要注意当dp写成递推的时候,更新顺序的选择时候道路方向相关的.
