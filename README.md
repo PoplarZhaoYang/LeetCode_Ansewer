@@ -9,6 +9,7 @@ Go on!my friends.
 ## 目录
 * [Problem 1 to 10](#P1)
 * [Problem 11 to 20](#P2)
+* [Problem 50 to 60](#P3)
 
 
 <h1 id="P1">P1</h1>
@@ -470,6 +471,31 @@ public:
                 }
             }
         }
+        return ans;
+    }
+};
+```
+
+<h1 id="P3">P1</h1>
+
+***
+##50 Pow(x, n)
+快速幂，需要注意的是n为负数, int n最小的负数无法转换为正数。
+```
+class Solution {
+public:
+    double myPow(double x, int n) {
+        double ans = 1;
+        bool ok = false;
+        long long k = n;
+        if (n < 0) ok = true, k = -k;
+        if (n == 0) return 1;
+        while (k) {
+            if (k & 1) ans *= x;
+            k >>= 1;
+            x = x * x;
+        }
+        if (ok) ans = 1 / ans;
         return ans;
     }
 };
