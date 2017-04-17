@@ -476,9 +476,46 @@ public:
 };
 ```
 
+## 19. Remove Nth Node From End of List
+由于是倒数第多少个，所以至少要先知道链表长度。知道长度之后，最快的方法就是把经过的节点存到数组里，直接索引到该节点。
+
+```
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode *now = head;
+        vector<ListNode*> nodes;
+        while (true) {
+            nodes.push_back(now);
+            if (now -> next == NULL) break;
+            now = now -> next;
+        }
+        ListNode *lst, *nxt;
+        if (nodes.size() - n == 0) lst = NULL;
+        else lst = nodes[nodes.size() - n - 1];
+        if (n == 1) nxt = NULL;
+        else nxt = nodes[nodes.size() - n + 1];
+        if (nxt && lst) lst -> next = nxt;
+        else if (nxt) head = nxt;
+        else if (lst) lst -> next = NULL;
+        else return NULL;
+        return head;
+    }
+};
+```
+
 <h1 id="P3">P1</h1>
 
 ***
+
 ##50 Pow(x, n)
 快速幂，需要注意的是n为负数, int n最小的负数无法转换为正数。
 ```
