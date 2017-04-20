@@ -9,7 +9,8 @@ Go on!my friends.
 ## 目录
 * [Problem 1 to 10](#P1)
 * [Problem 11 to 20](#P2)
-* [Problem 50 to 60](#P3)
+* [Problem 31 to 40] (#P4)
+* [Problem 51 to 60](#P3)
 
 
 <h1 id="P1">P1</h1>
@@ -508,6 +509,31 @@ public:
         else if (lst) lst -> next = NULL;
         else return NULL;
         return head;
+    }
+};
+```
+<h1 id="P4">P4</h1>
+
+## 33 Search in Rotated Sorted Array
+二分找横截面，二分找数字
+```
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        if (nums.size() == 0) return -1;
+        if (nums.size() == 1) return target == nums[0] ? 0 : -1;
+        int l = 0, r = nums.size() - 1;
+        while (l < r) {
+            int mid = (l + r + 1) / 2;
+            if (nums[mid] > nums[0]) l = mid;
+            else r = mid - 1;
+        }
+        int t;
+        vector<int>::iterator it = nums.begin();
+        while (l--) ++it;
+        if (nums[0] > target) t = lower_bound(++it, nums.end(), target) - nums.begin();
+        else t = lower_bound(nums.begin(), ++it, target) - nums.begin();
+        return nums[t] == target ? t : -1;
     }
 };
 ```
