@@ -537,6 +537,55 @@ public:
     }
 };
 ```
+##54 Spiral Matrix
+模拟螺旋路径，四个方向模拟就行
+```
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        vector<int> ans;
+        if (matrix.size() == 0) return ans;
+        int x = 0, y = 0, n = matrix.size(), m = matrix[0].size();
+        int dir = 0;
+        int last = 0;
+        while (true) {
+            if (dir == 0) {
+                while (y < m && matrix[x][y] != -123) {
+                    ans.push_back(matrix[x][y]);
+                    matrix[x][y] = -123;
+                    y++;
+                }
+                x++, y--;
+            } else if (dir == 1) {
+                while (x < n && matrix[x][y] != -123) {
+                    ans.push_back(matrix[x][y]);
+                    matrix[x][y] = -123;
+                    x++;
+                }
+                x--, y--;
+            } else if (dir == 2) {
+                while (y >= 0 && matrix[x][y] != -123) {
+                    ans.push_back(matrix[x][y]);
+                    matrix[x][y] = -123;
+                    y--;
+                }
+                x--, y++;
+            } else {
+                while (x >= 0 && matrix[x][y] != -123) {
+                    ans.push_back(matrix[x][y]);
+                    matrix[x][y] = -123;
+                    x--;
+                }
+                x++, y++;
+            }
+            dir = (++dir) % 4;
+            if (ans.size() == last) break;
+            last = ans.size();
+        }
+        return ans;
+    }
+};
+```
 
 ***
 ##62. Unique Paths(dp)
