@@ -513,6 +513,51 @@ public:
 };
 ```
 <h1 id="P4">P4</h1>
+## 30. Substring with Concatenation of All Words
+用unordered_map来代替trie数是很方便的。
+枚举不同的初始起点，然后对于每个初始起点把串分成单词间隔，用双指针来求目标坐标。
+如果是单字符我们知道用双指针，这里吧单个字符变成了单词，就用枚举起点转化为双指针。
+两个实现都十分巧妙。
+```
+class Solution {
+public:
+    vector<int> findSubstring(string s, vector<string>& words) {
+        vector<int> ans;
+        if (s.size() == 0 || words.size() == 0) return ans;
+        unordered_map<string, int> word;
+        int k = words[0].size();
+        for (auto &c: words) word[c]++;
+        for (int t = 0; t < k; ++t) {
+            int l = t, r = t + k, cnt = 0;
+            unordered_map<string, int> word_used;
+            while (r <= s.size()) {
+                string now, lnow;
+                for (int i = r - k; i < r; ++i) now += s[i];
+                for (int i = l; i < l + k; ++i) lnow += s[i];
+                if (word.count(now)) {
+                    if (word_used[now] == word[now]) {
+                        while (lnow != now) {
+                            l += k;
+                            word_used[lnow]--, cnt--;
+                            lnow.clear();
+                            for (int i = l; i < l + k; ++i) lnow += s[i];
+                        }
+                        l += k, r += k;
+                    }
+                    else word_used[now]++, cnt++, r += k;
+                    if (cnt == words.size()) ans.push_back(l), l = l + k, cnt--, word_used[lnow]--;
+                } else {
+                    l = r, r = l + k;
+                    cnt = 0;
+                    word_used.clear();
+                }
+            }
+        }
+        return ans;
+    }
+};
+```
+
 
 ## 33 Search in Rotated Sorted Array
 二分找横截面，二分找数字
