@@ -558,6 +558,34 @@ public:
 };
 ```
 
+***
+## 31. Next Permutation
+下一个排列，比当前排列大的最小排列，贪心变换，从右往左第一个下降，和右边最小的比它它的交换，然后它右边的取反。
+```
+class Solution {
+public:
+    void reverse(vector<int> &V, int i, int j) {
+        while (i < j) {
+            swap(V[i], V[j]);
+            ++i, --j;
+        }
+    }
+    
+    void nextPermutation(vector<int>& nums) {
+        int i = nums.size() - 1;
+        for (; i > 0; --i) {
+            if (nums[i] > nums[i - 1]) {
+                int j;
+                for (j = i + 1; j < nums.size() && nums[i - 1] < nums[j]; ++j) ;
+                swap(nums[i - 1], nums[j - 1]);
+                break;
+            }
+        }
+        reverse(nums, i, nums.size() - 1);
+    }
+};
+```
+
 
 ## 33 Search in Rotated Sorted Array
 二分找横截面，二分找数字
@@ -579,6 +607,36 @@ public:
         if (nums[0] > target) t = lower_bound(++it, nums.end(), target) - nums.begin();
         else t = lower_bound(nums.begin(), ++it, target) - nums.begin();
         return nums[t] == target ? t : -1;
+    }
+};
+```
+
+## 34. Search for a Range
+二分，这里边界靠左就左边界加，反之亦然。注意最左和最右边找不到要特判。
+```
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        vector<int> ans(2, -1);
+        if (nums.size() == 0) return ans;
+        int l = 0, r = nums.size() - 1;
+        while (l < r) {
+            int mid = (l + r + 1) / 2;
+            if (nums[mid] < target) l = mid;
+            else r = mid - 1;
+        }
+        if (nums[r] >= target) r--;
+        if (r + 1 >= nums.size() || nums[r + 1] != target) return ans;
+        ans[0] = r + 1;
+        r = nums.size() - 1;
+        while (l < r) {
+            int mid = (l + r) / 2;
+            if (nums[mid] > target) r = mid;
+            else l = mid + 1;
+        }
+        if (nums[l] <= target) l++;
+        ans[1] = l - 1;
+        return ans;
     }
 };
 ```
