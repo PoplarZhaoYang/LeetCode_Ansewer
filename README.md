@@ -9,7 +9,8 @@ Go on!my friends.
 ## 目录
 * [Problem 1 to 10](#P1)
 * [Problem 11 to 20](#P2)
-* [Problem 31 to 40] (#P4)
+* [Problem 31 to 40](#P4)
+* [Problem 41 to 50](#P5)
 * [Problem 51 to 60](#P3)
 
 
@@ -640,8 +641,36 @@ public:
     }
 };
 ```
+<h1 id="P5">P5</h1>
 
-<h1 id="P3">P1</h1>
+##42. Trapping Rain Water 
+考虑没一列的最终水容量，取决于它左边最高的柱子和它右边最高的实体，这样用数组维护这两个值就可以了，复杂度$O(n)$.
+```
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        vector<int> left_max, right_max(height.size());
+        int max_value = 0;
+        for (int i = 0; i < height.size(); ++i) {
+            left_max.push_back(max_value);
+            max_value = max(max_value, height[i]);
+        }
+        max_value = 0;
+        for (int i = height.size() - 1; i >= 0; --i) {
+            right_max[i] = max_value;
+            max_value = max(max_value, height[i]);
+        }
+        int water = 0;
+        for (int i = 0; i < height.size(); ++i) {
+            int side = min(left_max[i], right_max[i]);
+            water += side > height[i] ? side - height[i] : 0;
+        }
+        return water;
+    }
+};
+```
+
+<h1 id="P3">P3</h1>
 
 ***
 
