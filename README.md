@@ -670,6 +670,52 @@ public:
 };
 ```
 
+##43. Multiply Strings
+大数乘法，还是错了一次，考虑其中一个为0。
+大数都倒着处理比较容易。
+通用函数reverse(iterator_begin, iterator_end)好用
+```
+class Solution {
+public:
+    void add(string &origin, string &now, int start) {
+        int boost = 0, c;
+        for (int i = 0; i < now.size(); ++i, ++start) {
+            if (start >= origin.size()) origin += "0"; 
+            c = now[i] - '0' + origin[start] - '0' + boost;
+            origin[start] = c % 10 + '0';
+            boost = c > 9 ? 1 : 0;
+        }
+        if (boost) origin += "1";
+    }
+    
+    string single_multiply(char now, string &origin) {
+        string ans;
+        int boost = 0, a = now - '0', c;
+        for (int i = 0; i < origin.size(); ++i) {
+            int b = origin[i] - '0';
+            c = b * a + boost;
+            ans += c % 10 + '0';
+            boost = c / 10;
+        }
+        if (boost) ans += boost + '0';
+        return ans;
+    }
+
+    string multiply(string num1, string num2) {
+        string ans;
+        if (num1 == "0" || num2 == "0") return "0";
+        reverse(num1.begin(), num1.end());
+        reverse(num2.begin(), num2.end());
+        for (int i = 0; i < num2.size(); ++i) {
+            string down = single_multiply(num2[i], num1);
+            add(ans, down, i);
+        }
+        reverse(ans.begin(), ans.end());
+        return ans;
+    }
+};
+```
+
 <h1 id="P3">P3</h1>
 
 ***
