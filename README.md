@@ -716,6 +716,32 @@ public:
 };
 ```
 
+##44. Wildcard Matching
+dp[i][j]s串以i结尾，p串以j结尾是否匹配。
+这里主要考虑*可以为空字符
+```
+class Solution {
+public:
+    bool isMatch(string s, string p) {
+        vector<vector<bool> > dp(s.size() + 1, vector<bool>(p.size() + 1));
+        dp[0][0] = true;
+        if (p.size() != 0 && p[0] == '*') dp[0][1] = true;
+        for (int i = 0; i <= s.size(); ++i) {
+            for (int j = 1; j <= p.size(); ++j) {
+                if (i > 0 && (s[i - 1] == p[j - 1] || p[j - 1] == '?')) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else if (p[j - 1] == '*') {
+                    if (i > 0)
+                        dp[i][j] = dp[i - 1][j] || dp[i - 1][j - 1];
+                    dp[i][j] = dp[i][j] || dp[i][j - 1];
+                }
+            }
+        }
+        return dp[s.size()][p.size()];
+    }
+};
+```
+
 <h1 id="P3">P3</h1>
 
 ***
