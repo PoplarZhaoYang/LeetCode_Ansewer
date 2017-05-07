@@ -742,6 +742,27 @@ public:
 };
 ```
 
+#45. Jump Game II
+首先容易想到dp[i]，表示到i最少多少步，然后对每一个i，更新后面它可以到达的地方。
+但是这样最坏复杂度平方。其实可以放发现，这里朝右边更新的指针，没有必要回移了，因为
+回移之后的值只可能变大不会变小，那就没必要回移。这样复杂度O(n)
+
+```
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        vector<int> dp(nums.size(), int(1e9));
+        dp[0] = 0;
+        int ans = int(1e9),j = 0;
+        for (int i = 0; i < nums.size(); ++i) {
+            for (; j - i <= nums[i] && j < nums.size(); ++j) {
+                dp[j] = min(dp[j], dp[i] + 1);
+            }
+        }
+        return dp[nums.size() - 1];
+    }
+};
+```
 <h1 id="P3">P3</h1>
 
 ***
