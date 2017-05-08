@@ -788,6 +788,34 @@ public:
 };
 ```
 
+## 47. Permutations II
+输出所有的不同的排列，交换的时候和没一种不同的元素只交换一次，第二次只会造成重复的结果。
+```
+class Solution {
+public:
+    void dfs(int k, vector<int> &nums, vector<vector<int> > &ans) {
+        if (k == nums.size()) {
+            ans.push_back(nums);
+            return;
+        }
+        set<int> st;
+        for (int i = k; i < nums.size(); ++i) {
+            if (st.count(nums[i])) continue;
+            swap(nums[i], nums[k]);
+            dfs(k + 1, nums, ans);
+            swap(nums[i], nums[k]);
+            st.insert(nums[i]);
+        }
+    }
+
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        vector<vector<int> > ans;
+        dfs(0, nums, ans);
+        return ans;
+    }
+};
+```
+
 <h1 id="P3">P3</h1>
 
 ***
