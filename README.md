@@ -763,6 +763,31 @@ public:
     }
 };
 ```
+## 46. Permutations
+递归实现，每一个都和后面任意元素交换，然后递归。
+```
+class Solution {
+public:
+    void dfs(int k, vector<int> &nums, vector<vector<int> > &ans) {
+        if (k == nums.size()) {
+            ans.push_back(nums);
+            return;
+        }
+        for (int i = k; i < nums.size(); ++i) {
+            swap(nums[i], nums[k]);
+            dfs(k + 1, nums, ans);
+            swap(nums[i], nums[k]);
+        }
+    }
+
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int> > ans;
+        dfs(0, nums, ans);
+        return ans;
+    }
+};
+```
+
 <h1 id="P3">P3</h1>
 
 ***
