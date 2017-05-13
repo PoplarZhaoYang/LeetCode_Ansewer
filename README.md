@@ -890,6 +890,49 @@ public:
     }
 };
 ```
+***
+## 56. Merge Intervals
+区间合并，排序之后合并。
+```
+/**
+ * Definition for an interval.
+ * struct Interval {
+ *     int start;
+ *     int end;
+ *     Interval() : start(0), end(0) {}
+ *     Interval(int s, int e) : start(s), end(e) {}
+ * };
+ */
+ 
+ bool cmp(Interval a, Interval b) {
+     if (a.start == b.start) return a.end < b.end;
+     return a.start < b.start;
+ }
+ 
+class Solution {
+
+public:
+    vector<Interval> merge(vector<Interval>& intervals) {
+        sort(intervals.begin(), intervals.end(), cmp);
+        vector<Interval> ans;
+        int l = -1, r = -1;
+        for (auto c: intervals) {
+            if (l == -1) {
+                l = c.start, r = c.end;
+            } else {
+                if (c.start > r) {
+                    ans.push_back(Interval(l, r));
+                    l = c.start, r = c.end;
+                } else {
+                    r = max(r, c.end);
+                }
+            }
+        }
+        if (l != -1) ans.push_back(Interval(l, r));
+        return ans;
+    }
+};
+```
 
 ***
 ##62. Unique Paths(dp)
