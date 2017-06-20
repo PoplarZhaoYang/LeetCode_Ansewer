@@ -1,4 +1,3 @@
-
 Leetcode Answer.
 ========
 The way is not so far.It has 337 problems until 2016-03-15.
@@ -9,6 +8,7 @@ Go on!my friends.
 ## 目录
 * [Problem 1 to 10](#P1)
 * [Problem 11 to 20](#P2)
+* [Problem 21 to 30](#P6)
 * [Problem 31 to 40](#P4)
 * [Problem 41 to 50](#P5)
 * [Problem 51 to 60](#P3)
@@ -513,6 +513,33 @@ public:
     }
 };
 ```
+<h1 id="P6">P6</h1>
+
+## 22. Generate Parentheses
+从左到右生成括号串，核心就是括号串满足的条件，左到右遍历，每一个时刻右边的左括号只能大于等于。
+```
+class Solution {
+public:
+    vector<string> ans;
+    int stop;
+        
+    void dfs(int l, int r, string str) {
+        if (r == stop) ans.push_back(str);
+        else {
+            if (l < stop) dfs(l + 1, r, str + "(");
+            if (r < l) dfs(l, r + 1, str +")");
+        }
+    }
+
+    vector<string> generateParenthesis(int n) {
+        stop = n;
+        dfs(0, 0, "");
+        return ans;
+    }
+};
+```
+
+
 <h1 id="P4">P4</h1>
 ## 30. Substring with Concatenation of All Words
 用unordered_map来代替trie数是很方便的。
